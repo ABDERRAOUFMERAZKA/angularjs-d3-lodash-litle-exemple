@@ -11,3 +11,27 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
   $routeProvider.otherwise({redirectTo: '/view1'});
 }]);
+// Directive pour encapsuler la logique test 
+(function() {
+  var myApp = angular
+    .module('myApp')
+    .directive('myDirective', function() {
+      return {
+        'restrict': 'E',
+        'scope': true,
+        'controller': 'View1Ctrl',
+        'controllerAs': '$ctrl'
+      };
+    });
+})();
+// Controller
+(function() {
+angular
+    .controller('View1Ctrl', ['$scope', 'DataService', function($scope, DataService) {
+      DataService
+        .retrieveData()
+        .then(function(data) {
+          $scope.visualUserState = data;
+        });
+    }]);
+})();
